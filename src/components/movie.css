@@ -1,0 +1,27 @@
+.Movie {
+    display: flex;
+    flexDirection: row;
+    justifyContent: center;
+    border: 1px solid #2e2e36;
+    background-color: #2e2e36;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 20px;
+    width: 50vw;
+    cursor: pointer;
+}
+
+.MovieInfo {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.Poster {
+    height: 30vh;
+}
+
+.rating-star {
+    height: 4vh;
+}

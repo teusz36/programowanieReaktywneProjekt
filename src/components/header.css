@@ -1,0 +1,20 @@
+.transparent-button {
+    background-color: transparent;
+    border: transparent;
+}
+
+.login-text {
+    color: white;
+    font-size: 20px;
+    margin-left: 15px;
+}
+
+.input-search {
+    color: white;
+    width: 20vw;
+    border-radius: 20px;
+    margin-left: 10px;
+    padding: 6px;
+    background-color: #2b2a33;
+    border: 2px solid #ffffff;
+}
