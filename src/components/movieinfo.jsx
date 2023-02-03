@@ -5,12 +5,8 @@ const MovieInfo = (props) => {
                  <div style={{fontSize: '20px'}}>
                     {props.title}
                  </div>
-                 <div style={{fontSize: '15px'}}>
-                    <span>{props.titleOriginal} </span>
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    <span>{props.year}</span>
+                 <div style={{fontSize: '15px', marginTop: '15px'}}>
+                    <span>{props.description} </span>
                  </div>
            </div>
 }

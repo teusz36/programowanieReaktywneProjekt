@@ -2,3 +2,24 @@
     height: 60vh;
     margin-top: 5vh;
 }
+
+.Details {
+    width: 40vw;
+    display: flex;
+    justifyContent: center;
+    alignItems: center;
+    flexDirection: column;
+    marginTop: 5vh
+}
+
+.boxDetails {
+    display: flex;
+    flexDirection: column;
+    justifyContent: center;
+    alignItems: center;
+    border: 1px solid #2e2e36;
+    background-color: #2e2e36;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 20px;
+}

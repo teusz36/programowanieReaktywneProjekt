@@ -1,18 +1,63 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import Movie from '.././components/movie.jsx';
 import Poster1 from '.././GuardiansOfTheGalaxyvol1poster.jpg';
 import Poster2 from '.././GuardiansOfTheGalaxyvol2poster.jpg';
 import { Link } from "react-router-dom";
+import axios from "axios";
+import './movielist.css';
+import { isExpired } from "react-jwt";
 
-const MovieList = () => {
-   return <div>
+const MovieList = (params) => {
+
+    const [movies, setMovies] = useState([]);
+    const [data, setData] = useState([]);
+    let search = localStorage.getItem('search');
+    console.log(search);
+
+    useEffect(() => {
+            axios.get('https://at.usermd.net/api/movies')
+            .then(res => {
+                console.log(res.data)
+                console.log(search)
+                if( search !== "") {
+                    let dataRaw = res.data.filter(function( element ) {
+                        if(element.title !== undefined || element.image !== undefined || element.content !== undefined) {
+                            return element;
+                        }
+                    });
+                    setData(dataRaw.filter(m => m.title.toLowerCase().includes(search.toLowerCase())));
+                } else {
+                    setData(res.data);
+                }
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+        }, [])
+
+   return (<div>
                   <p>
-                      <Link to="/details" state={{ movieTitle: "Strażnicy galaktyki vol.1", poster: Poster1, titleOriginal: "Guardians Of The Galaxy vol. 1", yearOfRelease: "2014", rating: "5.0"}} className="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><Movie poster={Poster1} title="Strażnicy galaktyki vol.1" titleOriginal="Guardians Of The Galaxy vol. 1" year="2014" rating="5.0"/></Link>
-                      <Link to="/details" state={{ movieTitle: "Strażnicy galaktyki vol.2", poster: Poster2, titleOriginal: "Guardians Of The Galaxy vol. 2", yearOfRelease: "2017", rating: "4.6"}} className="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><Movie poster={Poster2} title="Strażnicy galaktyki vol.2" titleOriginal="Guardians Of The Galaxy vol. 2" year="2017" rating="4.6"/></Link>
-                      <Link to="/details" state={{ movieTitle: "Strażnicy galaktyki vol.2", poster: Poster2, titleOriginal: "Guardians Of The Galaxy vol. 2", yearOfRelease: "2017", rating: "4.2"}} className="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><Movie poster={Poster2} title="Strażnicy galaktyki vol.2" titleOriginal="Guardians Of The Galaxy vol. 2" year="2017" rating="4.2"/></Link>
-                      <Link to="/details" state={{ movieTitle: "Strażnicy galaktyki vol.2", poster: Poster2, titleOriginal: "Guardians Of The Galaxy vol. 2", yearOfRelease: "2017", rating: "3.2"}} className="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><Movie poster={Poster2} title="Strażnicy galaktyki vol.2" titleOriginal="Guardians Of The Galaxy vol. 2" year="2017" rating="3.2"/></Link>
+                    {
+                        data.map((movie, i) => {
+                        console.log("title: ", movie.title)
+                            if(movie.content !== undefined && movie.title !== undefined) {
+                            let rating = Math.round((Math.random() * (4) + 1) * 10) / 10;
+                                return (
+                                    <Link to="/details" state={{ id: movie.id, rating: rating }} className="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><Movie poster={movie.image} title={movie.title} description={movie.content} rating={rating}/></Link>
+                                )
+                            }
+
+                        }
+                        )
+                    }
+                    {
+                        !isExpired(localStorage.getItem('token')) ?
+                            <Link to="/add" className="nav-link addNew" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Dodaj film</Link>
+                            :
+                            null
+                    }
                   </p>
-                </div>
+           </div> )
 };
 
 export default MovieList;

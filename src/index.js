@@ -9,12 +9,14 @@ import {
    BrowserRouter,
    Routes,
    Route,
+   Navigate
 } from "react-router-dom";
 import Details from './components/details.jsx';
 import MovieList from './components/MovieList.jsx';
 import MovieAdd from './components/movieAdd.jsx';
 import LoginScreen from './components/loginScreen.jsx';
 import RegisterScreen from './components/registerScreen.jsx';
+import { isExpired } from "react-jwt";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,7 +26,7 @@ root.render(
             <Route path="/" element={<App />} >
                 <Route path="" element={<MovieList />} />
                 <Route path="details" element={<Details />} />
-                <Route path="add" element={<MovieAdd />} />
+                <Route path="add" element={isExpired(localStorage.getItem('token')) ? <Navigate replace to="/"/> : <MovieAdd />} />
                 <Route path="signin" element={<LoginScreen />} />
                 <Route path="signup" element={<RegisterScreen />} />
             </Route>

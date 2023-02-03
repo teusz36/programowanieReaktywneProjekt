@@ -9,7 +9,7 @@ const Movie = (props) => {
                     <img src={props.poster} className="Poster" alt="poster"/>
                  </div>
                  <div className="MovieInfo">
-                    <MovieInfo title={props.title} titleOriginal={props.titleOriginal} year={props.year}/>
+                    <MovieInfo title={props.title} description={props.description} year={props.year}/>
                     &nbsp;
                     <Rating rating={props.rating} />
                  </div>
